@@ -1,33 +1,30 @@
 def sub_str(words, dictionary)
   hash = {}
-#   p words.include?("b")
-  # first, I will loop through each element of the dictionary
-  dictionary.each_with_index do |word, index|
-    new_word = ''
-    count = 0
-    # so, i will take each element of the dictionary
-    # and check if all its character is in the words argument
-    word.each_char do |character|
-      # if each of this character is in the words
-      # then add the word(the element) to the hash as key and the times it appears as value
-      if words.include?(character)
-        new_word += character
+  value = 0
+  new_str = words.split(' ').each {|str| str}
+  new_str.each do |text|
+    dictionary.each_with_index do |word, index|
+      new_word = ''
+      word, text = word.downcase, text.downcase
+      word.each_char {|character| new_word += character if text.include?(character)}
+      if new_word == word
+        if hash.has_key?(new_word)
+          value = hash[new_word] + 1
+          hash[new_word] = value
+        else
+          hash[new_word] = 1
+        end
       end
     end
-    if new_word == word
-      count += 1
-      hash[new_word] = count
-      p "new word #{new_word}"
-      p "hash word is #{hash.key(count)}"
-      # if hash.key?(new_word)
-      # end
-    end
-
   end
   hash
 end
 
-dictionary = ["below","down","go","going","horn","how","howdy","it","i","low","own","part", "low", "partner","sit", "bow"]
-words = "below"
+dictionary = ["below","down","go","going","horn","how","howdy","it","i","low","own","part","partner","sit"]
+word1 = "below"
+word2 = "Howdy partner"
+word3 = "Howdy partner, sit down! How's it going?"
 
-p sub_str(words, dictionary)
+p sub_str(word1, dictionary)
+p sub_str(word2, dictionary)
+p sub_str(word3, dictionary)
